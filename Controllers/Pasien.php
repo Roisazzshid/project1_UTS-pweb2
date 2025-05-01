@@ -1,7 +1,7 @@
 <?php
 require_once 'Config/DB.php';
 
-class Prodi
+class Pasien
 {
     private $pdo;
 
@@ -12,26 +12,26 @@ class Prodi
 
     public function index()
     {
-        $stmt = $this->pdo->query("SELECT * FROM prodi");
+        $stmt = $this->pdo->query("SELECT * FROM pasien");
         return $stmt;
     }
 
     public function show($id)
     {
-        $stmt = $this->pdo->query("SELECT * FROM prodi WHERE id = $id");
+        $stmt = $this->pdo->query("SELECT * FROM pasien WHERE id = $id");
         return $stmt;
     }
 
-    public function create($kode, $nama, $kaprodi) 
+    public function create($kode, $nama, $tmp_lahir, $tgl_lahir, $gender, $email, $alamat, $kelurahan_id) 
     {
-        $stmt = $this->pdo->prepare("INSERT INTO prodi (kode, nama, kaprodi) VALUES (?, ?, ?)");
-        return $stmt->execute([$kode, $nama, $kaprodi]);
+        $stmt = $this->pdo->prepare("INSERT INTO pasien (kode, nama, tmp_lahir, tgl_lahir, gender, email, alamat, kelurahan_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        return $stmt->execute([$kode, $nama, $tmp_lahir, $tgl_lahir, $gender, $email, $alamat, $kelurahan_id]);
     }
 
     public function update($id, $data)
     {
-        $stmt = $this->pdo->prepare("UPDATE prodi SET kode=?,nama=?,kaprodi=? WHERE id=?");
-        return $stmt->execute([$data['kode'],$data['nama'],$data['kaprodi'],$id]);
+        $stmt = $this->pdo->prepare("UPDATE pasien SET kode=?, nama=?, tmp_lahir=?, tgl_lahir=?, gender=?, email=?, alamat=?, kelurahan_id=? WHERE id=?");
+        return $stmt->execute([$data['kode'],$data['nama'],$data['tmp_lahir'],$data['tgl_lahir'],$data['gender'],$data['email'],$data['alamat'],$data['kelurahan_id'],$id]);
     }
 
     public function delete($id)
@@ -42,7 +42,7 @@ class Prodi
         }
 
         try {
-            $stmt = $this->pdo->prepare("DELETE FROM prodi WHERE id = ?");
+            $stmt = $this->pdo->prepare("DELETE FROM pasien WHERE id = ?");
             $result = $stmt->execute([$id]);
 
             // Cek apakah ada baris yang terpengaruh
@@ -59,4 +59,4 @@ class Prodi
     }
 }
 
-$prodi = new Prodi($pdo);
+$pasien = new Pasien($pdo);

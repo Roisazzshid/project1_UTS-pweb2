@@ -183,10 +183,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="?url=mahasiswa" class="nav-link">
+                    <a href="?url=pasien" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
-                            Mahasiswa
+                            Data Pasien
                             <span class="right badge badge-danger">New</span>
                         </p>
                     </a>

@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost'; // Your database host
-$db   = 'dbkampus'; // Your database name
+$db   = 'dbpuskesmas'; // Your database name
 $user = 'root'; // Your database username
 $pass = ''; // Your database password
 $charset = 'utf8mb4';

@@ -9,8 +9,8 @@
                 <div class="modal-body">
                     <form method="post" action="">
                         <div class="mb-3">
-                            <label for="nim" class="form-label">nim</label>
-                            <input type="number" class="form-control" id="nim" name="nim" required>
+                            <label for="kode" class="form-label">kode</label>
+                            <input type="text" class="form-control" id="kode" name="kode" required>
                         </div>
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama</label>
@@ -22,23 +22,23 @@
                         </div>
                         <div class="mb-3">
                             <label for="tgl_lahir" class="form-label">tgl_lahir</label>
-                            <input type="text" class="form-control" id="tgl_lahir" name="tgl_lahir" required>
+                            <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="gender" class="form-label">gender</label>
+                            <input type="text" class="form-control" id="gender" name="gender" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">email</label>
                             <input type="email" class="form-control" id="email" name="email" required>
                         </div>
                         <div class="mb-3">
-                            <label for="thn_masuk" class="form-label">thn_masuk</label>
-                            <input type="number" class="form-control" id="thn_masuk" name="thn_masuk" required>
+                            <label for="alamat" class="form-label">alamat</label>
+                            <input type="text" class="form-control" id="alamat" name="alamat" required>
                         </div>
                         <div class="mb-3">
-                            <label for="sks_lulus" class="form-label">sks_lulus</label>
-                            <input type="number" class="form-control" id="sks_lulus" name="sks_lulus" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="ipk" class="form-label">ipk</label>
-                            <input type="number" class="form-control" id="ipk" name="ipk" required>
+                            <label for="kelurahan_id" class="form-label">kelurahan_id</label>
+                            <input type="number" class="form-control" id="kelurahan_id" name="kelurahan_id" required>
                         </div>
                         <input type="hidden" name="type" value="add">
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -56,46 +56,44 @@
                 <thead>
                 <tr>
                 <th>No</th>
-                <th>NIM</th>
+                <th>Kode</th>
                 <th>Nama</th>
                 <th>Tempat Lahir</th>
                 <th>Tanggal Lahir</th>
+                <th>Gender</th>
                 <th>Email</th>
-                <th>Tahun Masuk</th>
-                <th>SKS Lulus</th>
-                <th>IPK</th>
-                <th>Prodi</th>
+                <th>Alamat</th>
+                <th>kel</th>
                 <th colspan="2">Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
                     <?php 
-                    require ('Controllers/Mahasiswa.php');
-                    $row = $mahasiswa->index();
+                    require ('Controllers/Pasien.php');
+                    $row = $pasien->index();
                     $nomer=1;
                     foreach($row as $item){
                     ?>
                         <tr>
                             <td><?php echo$nomer++ ?></td>
-                            <td><?php echo $item['nim']; ?></td>
+                            <td><?php echo $item['kode']; ?></td>
                             <td><?php echo $item['nama']; ?></td>
                             <td><?php echo $item['tmp_lahir']; ?></td>
                             <td><?php echo $item['tgl_lahir']; ?></td>
+                            <td><?php echo $item['gender']; ?></td>
                             <td><?php echo $item['email']; ?></td>
-                            <td><?php echo $item['thn_masuk']; ?></td>
-                            <td><?php echo $item['sks_lulus']; ?></td>
-                            <td><?php echo $item['ipk']; ?></td>
-                            <td><?php echo $item['prodi_id']; ?></td>
+                            <td><?php echo $item['alamat']; ?></td>
+                            <td><?php echo $item['kelurahan_id']; ?></td>
                             <td>
                                 <form method="post">
-                                    <input type="hidden" name="nim" value="<?php echo $item['nim']; ?>">
+                                    <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
                                     <input type="hidden" name="type" value="edit">
                                     <input type="submit" value="edit" class="btn btn-warning btn-sm">
                                 </form>
                             </td>
                             <td>
                                 <form method="post">
-                                    <input type="hidden" name="nim" value="<?php echo $item['nim']; ?>">
+                                    <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
                                     <input type="hidden" name="type" value="delete">
                                     <input type="submit" value="delete" class="btn btn-danger btn-sm">
                                 </form>
@@ -104,16 +102,16 @@
                     <?php } 
                     if(isset($_POST['type'])){
                         if($_POST['type'] == 'delete'){
-                            $mahasiswa->delete($_POST['nim']);
+                            $pasien->delete($_POST['id']);
                             echo "<script>alert('Data berhasil dihapus.');</script>";
-                            echo "<script>window.location.href = 'dashboard.php?url=mahasiswa';</script>";
+                            echo "<script>window.location.href = 'dashboard.php?url=pasien';</script>";
                         } elseif($_POST['type'] == 'add'){
-                            $mahasiswa->create($_POST['nim'], $_POST['nama'], $_POST['tmp_lahir'], $_POST['tgl_lahir'], $_POST['email'], $_POST['thn_masuk'], $_POST['sks_lulus'], $_POST['ipk'], $_POST['prodinim']);
+                            $pasien->create($_POST['kode'], $_POST['nama'], $_POST['tmp_lahir'], $_POST['tgl_lahir'], $_POST['gender'], $_POST['email'], $_POST['alamat'], $_POST['kelurahan_id']);
                             echo "<script>alert('Data berhasil ditambahkan.');</script>";
-                            echo "<script>window.location.href = 'dashboard.php?url=mahasiswa';</script>";
+                            echo "<script>window.location.href = 'dashboard.php?url=pasien';</script>";
                         } elseif ($_POST['type'] == 'edit') {
-                            $nim = $_POST['nim'];
-                            $stmt = $mahasiswa->show($nim);
+                            $id = $_POST['id'];
+                            $stmt = $pasien->show($id);
                             $item = $stmt->fetch(PDO::FETCH_ASSOC);
 
                             if ($item) {
@@ -121,7 +119,11 @@
                                 <div class="col-6 card shadow p-3 mb-5 bg-white rounded align-self-center">
                                     <h3 class="text-center">Edit Data</h3>
                                     <input type="hidden" name="type" value="update">
-                                    <input type="hidden" name="nim" value="' . htmlspecialchars($item['nim']) . '">
+                                    <input type="hidden" name="id" value="' . htmlspecialchars($item['id']) . '">
+                                    <div class="mb-3">
+                                        <label for="kode" class="form-label">Kode</label>
+                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['kode']) . '" id="kode" name="kode" required>
+                                    </div>
                                     <div class="mb-3">
                                         <label for="nama" class="form-label">Nama</label>
                                         <input type="text" class="form-control" value="' . htmlspecialchars($item['nama']) . '" id="nama" name="nama" required>
@@ -132,27 +134,23 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="tgl_lahir" class="form-label">tgl_lahir</label>
-                                        <input type="number" class="form-control" value="' . htmlspecialchars($item['tgl_lahir']) . '" id="tgl_lahir" name="tgl_lahir" required>
+                                        <input type="date" class="form-control" value="' . htmlspecialchars($item['tgl_lahir']) . '" id="tgl_lahir" name="tgl_lahir" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="gender" class="form-label">gender</label>
+                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['gender']) . '" id="gender" name="gender" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">email</label>
                                         <input type="email" class="form-control" value="' . htmlspecialchars($item['email']) . '" id="email" name="email" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="thn_masuk" class="form-label">thn_masuk</label>
-                                        <input type="number" class="form-control" value="' . htmlspecialchars($item['thn_masuk']) . '" id="thn_masuk" name="thn_masuk" required>
+                                        <label for="alamat" class="form-label">alamat</label>
+                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['alamat']) . '" id="alamat" name="alamat" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="sks_lulus" class="form-label">sks_lulus</label>
-                                        <input type="number" class="form-control" value="' . htmlspecialchars($item['sks_lulus']) . '" id="sks_lulus" name="sks_lulus" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="ipk" class="form-label">ipk</label>
-                                        <input type="number" class="form-control" value="' . htmlspecialchars($item['ipk']) . '" id="ipk" name="ipk" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="prodi_id" class="form-label">prodi_id</label>
-                                        <input type="number" class="form-control" value="' . htmlspecialchars($item['prodi_id']) . '" id="prodi_id" name="prodi_id" required>
+                                        <label for="kelurahan_id" class="form-label">kelurahan_id</label>
+                                        <input type="number" class="form-control" value="' . htmlspecialchars($item['kelurahan_id']) . '" id="kelurahan_id" name="kelurahan_id" required>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Update</button>
                                 </div>
@@ -161,20 +159,20 @@
                                 echo "Item not found.";
                             }
                         } elseif ($_POST['type'] == 'update') {
-                            $nim = $_POST['nim'];
+                            $id = $_POST['id'];
                             $data = [
+                                'kode' => $_POST['kode'],
                                 'nama' => $_POST['nama'],
                                 'tmp_lahir' => $_POST['tmp_lahir'],
                                 'tgl_lahir' => $_POST['tgl_lahir'],
+                                'gender' => $_POST['gender'],
                                 'email' => $_POST['email'],
-                                'thn_masuk' => $_POST['thn_masuk'],
-                                'sks_lulus' => $_POST['sks_lulus'],
-                                'ipk' => $_POST['ipk'],
-                                'prodi_id' => $_POST['kaprodi']
+                                'alamat' => $_POST['alamat'],
+                                'kelurahan_id' => $_POST['kelurahan_id']
                             ];
-                            $mahasiswa->update($nim, $data);
+                            $pasien->update($id, $data);
                             echo "<script>
-                                window.location.href = 'dashboard.php?url=mahasiswa';
+                                window.location.href = 'dashboard.php?url=pasien';
                             </script>";
                         }
                     } 
