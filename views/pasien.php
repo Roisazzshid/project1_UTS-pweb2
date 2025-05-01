@@ -25,8 +25,10 @@
                             <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir" required>
                         </div>
                         <div class="mb-3">
-                            <label for="gender" class="form-label">gender</label>
-                            <input type="text" class="form-control" id="gender" name="gender" required>
+                            <input type="radio" class="form-check-control" id="gender" name="gender" value="L" required>
+                            <label for="laki-laki" class="form-label">Laki-laki</label>
+                            <input type="radio" class="form-check-control" id="gender" name="gender" value="P" required>
+                            <label for="perempuan" class="form-label">Perempuan</label>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">email</label>
@@ -37,8 +39,16 @@
                             <input type="text" class="form-control" id="alamat" name="alamat" required>
                         </div>
                         <div class="mb-3">
-                            <label for="kelurahan_id" class="form-label">kelurahan_id</label>
-                            <input type="number" class="form-control" id="kelurahan_id" name="kelurahan_id" required>
+                            <label for="kelurahan_id" class="form-label">kelurahan</label>
+                            <select class="form-select" name="kelurahan_id" id="kelurahan_id">
+                                <option value="" hidden>--Pilih Kelurahan--</option>
+                                <?php 
+                                require_once 'Controllers/Kelurahan.php';
+                                $kel = $kelurahan->index();
+                                foreach ($kel as $item) : ?>
+                                    <option value="<?php echo $item['id']; ?>"><?php echo $item['nama']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                         <input type="hidden" name="type" value="add">
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -149,8 +159,17 @@
                                         <input type="text" class="form-control" value="' . htmlspecialchars($item['alamat']) . '" id="alamat" name="alamat" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="kelurahan_id" class="form-label">kelurahan_id</label>
-                                        <input type="number" class="form-control" value="' . htmlspecialchars($item['kelurahan_id']) . '" id="kelurahan_id" name="kelurahan_id" required>
+                                        <label for="kelurahan_id" class="form-label">kelurahan</label>
+                                            <select class="form-select" name="kelurahan_id" id="kelurahan_id">
+                                                <option value="" hidden>--Pilih Kelurahan--</option>';
+                                                $kelurahan = $kelurahan->index();
+                                                foreach ($kelurahan as $lurah) {
+                                                 echo "<option value='{$lurah['id']}' "; 
+                                                 echo $lurah['id']==htmlspecialchars($item['kelurahan_id']) ? 'selected':'' ;
+                                                 echo ">{$lurah['nama']}</option>";
+                                                    //echo "<option value='{$lurah['id']}'>{$lurah['nama']}</option>";
+                                                }
+                                            echo '</select>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Update</button>
                                 </div>
