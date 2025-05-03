@@ -175,19 +175,26 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="?url=prodi" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Program Studi
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="?url=pasien" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Data Pasien
-                            <span class="right badge badge-danger">New</span>
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="?url=periksa" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Data Periksa
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="?url=paramedik" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Data Paramedik
                         </p>
                     </a>
                 </li>
