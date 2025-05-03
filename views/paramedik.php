@@ -30,18 +30,18 @@
                             <input type="radio" class="form-check-control" id="gender" name="gender" value="P" required>
                             <label for="perempuan" class="form-label">Perempuan</label>
                         </div>
-                        <!-- <div class="mb-3">
+                        <div class="mb-3">
                             <label for="unit_kerja" class="form-label">Unit Kerja</label>
                             <select class="form-select" name="unit_kerja" id="unit_kerja">
                                 <option value="" hidden>--Pilih Unit Kerja--</option>
                                 <?php 
-                                //require_once 'Controllers/Unitkerja.php';
-                                //$unit = $unitkerja->index();
-                                //foreach ($unit as $item) : ?>
-                                    <option value="<?php //echo $item['id']; ?>"><?php //echo $item['nama']; ?></option>
-                                <?php //endforeach; ?>
+                                require_once 'Controllers/Unitkerja.php';
+                                $unit = $unitkerja->index();
+                                foreach ($unit as $item) : ?>
+                                    <option value="<?php echo $item['id']; ?>"><?php echo $item['nama']; ?></option>
+                                <?php endforeach; ?>
                             </select>
-                        </div> -->
+                        </div>
                         <div class="mb-3">
                             <label for="telepon" class="form-label">telepon</label>
                             <input type="number" class="form-control" id="telepon" name="telepon" required>

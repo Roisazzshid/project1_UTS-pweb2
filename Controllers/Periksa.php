@@ -12,13 +12,20 @@ class Periksa
 
     public function index()
     {
-        $stmt = $this->pdo->query("SELECT * FROM periksa");
+        $stmt = $this->pdo->query("SELECT periksa.*, pasien.nama AS nama_pasien, paramedik.nama AS nama_paramedik
+        FROM periksa
+        JOIN pasien ON periksa.pasien_id = pasien.id
+        JOIN paramedik ON periksa.paramedik_id = paramedik.id");
         return $stmt;
     }
 
     public function show($id)
     {
-        $stmt = $this->pdo->query("SELECT * FROM periksa WHERE id = $id");
+        $stmt = $this->pdo->query("SELECT periksa.*, pasien.nama AS nama_pasien, paramedik.nama AS nama_paramedik
+        FROM periksa
+        JOIN pasien ON periksa.pasien_id = pasien.id
+        JOIN paramedik ON periksa.paramedik_id = paramedik.id
+        WHERE periksa.id = $id");
         return $stmt;
     }
 
