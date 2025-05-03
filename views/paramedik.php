@@ -9,10 +9,6 @@
                 <div class="modal-body">
                     <form method="post" action="">
                         <div class="mb-3">
-                            <label for="kode" class="form-label">kode</label>
-                            <input type="text" class="form-control" id="kode" name="kode" required>
-                        </div>
-                        <div class="mb-3">
                             <label for="nama" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="nama" name="nama" required>
                         </div>
@@ -31,9 +27,9 @@
                             <label for="perempuan" class="form-label">Perempuan</label>
                         </div>
                         <div class="mb-3">
-                            <label for="unit_kerja" class="form-label">Unit Kerja</label>
+                            <label for="unit_kerja" class="form-label">Kategori</label>
                             <select class="form-select" name="unit_kerja" id="unit_kerja">
-                                <option value="" hidden>--Pilih Unit Kerja--</option>
+                                <option value="" hidden>--Pilih Kategori--</option>
                                 <?php 
                                 require_once 'Controllers/Unitkerja.php';
                                 $unit = $unitkerja->index();
@@ -112,7 +108,7 @@
                             echo "<script>alert('Data berhasil dihapus.');</script>";
                             echo "<script>window.location.href = 'dashboard.php?url=paramedik';</script>";
                         } elseif($_POST['type'] == 'add'){
-                            $paramedik->create($_POST['kode'], $_POST['nama'], $_POST['tmp_lahir'], $_POST['tgl_lahir'], $_POST['gender'], $_POST['email'], $_POST['alamat'], $_POST['kelurahan_id']);
+                            $paramedik->create($_POST['nama'], $_POST['tmp_lahir'], $_POST['tgl_lahir'], $_POST['gender'], $_POST['telepon'], $_POST['alamat'], $_POST['unit_kerja']);
                             echo "<script>alert('Data berhasil ditambahkan.');</script>";
                             echo "<script>window.location.href = 'dashboard.php?url=paramedik';</script>";
                         } elseif ($_POST['type'] == 'edit') {
@@ -127,10 +123,6 @@
                                     <input type="hidden" name="type" value="update">
                                     <input type="hidden" name="id" value="' . htmlspecialchars($item['id']) . '">
                                     <div class="mb-3">
-                                        <label for="kode" class="form-label">Kode</label>
-                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['kode']) . '" id="kode" name="kode" required>
-                                    </div>
-                                    <div class="mb-3">
                                         <label for="nama" class="form-label">Nama</label>
                                         <input type="text" class="form-control" value="' . htmlspecialchars($item['nama']) . '" id="nama" name="nama" required>
                                     </div>
@@ -143,29 +135,31 @@
                                         <input type="date" class="form-control" value="' . htmlspecialchars($item['tgl_lahir']) . '" id="tgl_lahir" name="tgl_lahir" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="gender" class="form-label">gender</label>
-                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['gender']) . '" id="gender" name="gender" required>
+                                        <input type="radio" class="form-check-control" id="gender" name="gender" value="L" '; htmlspecialchars($item['gender']) == 'L' ? 'checked' : ''; echo ' required>
+                                        <label for="laki-laki" class="form-label">Laki-laki</label>
+                                        <input type="radio" class="form-check-control" id="gender" name="gender" value="P" '; htmlspecialchars($item['gender']) == 'P' ? 'checked' : ''; echo ' required>
+                                        <label for="perempuan" class="form-label">Perempuan</label>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="email" class="form-label">email</label>
-                                        <input type="email" class="form-control" value="' . htmlspecialchars($item['email']) . '" id="email" name="email" required>
+                                        <label for="unit_jenis" class="form-label">Unit Jenis</label>
+                                            <select class="form-select" name="unit_jenis" id="unit_jenis">
+                                                <option value="" hidden>--Pilih Unit Jenis--</option>';
+                                                $paramedik = $paramedik->index();
+                                                foreach ($paramedik as $medik) {
+                                                 echo "<option value='{$medik['id']}' "; 
+                                                 echo $medik['id']==htmlspecialchars($item['unit_kerja']) ? 'selected':'' ;
+                                                 echo ">{$medik['nama']}</option>";
+                                                    //echo "<option value='{$lurah['id']}'>{$lurah['nama']}</option>";
+                                                }
+                                            echo '</select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="telepon" class="form-label">telepon</label>
+                                        <input type="number" class="form-control" value="' . htmlspecialchars($item['telepon']) . '" id="telepon" name="telepon" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="alamat" class="form-label">alamat</label>
                                         <input type="text" class="form-control" value="' . htmlspecialchars($item['alamat']) . '" id="alamat" name="alamat" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="kelurahan_id" class="form-label">kelurahan</label>
-                                            <select class="form-select" name="kelurahan_id" id="kelurahan_id">
-                                                <option value="" hidden>--Pilih Kelurahan--</option>';
-                                                $kelurahan = $kelurahan->index();
-                                                foreach ($kelurahan as $lurah) {
-                                                 echo "<option value='{$lurah['id']}' "; 
-                                                 echo $lurah['id']==htmlspecialchars($item['kelurahan_id']) ? 'selected':'' ;
-                                                 echo ">{$lurah['nama']}</option>";
-                                                    //echo "<option value='{$lurah['id']}'>{$lurah['nama']}</option>";
-                                                }
-                                            echo '</select>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Update</button>
                                 </div>
@@ -176,14 +170,12 @@
                         } elseif ($_POST['type'] == 'update') {
                             $id = $_POST['id'];
                             $data = [
-                                'kode' => $_POST['kode'],
                                 'nama' => $_POST['nama'],
                                 'tmp_lahir' => $_POST['tmp_lahir'],
                                 'tgl_lahir' => $_POST['tgl_lahir'],
                                 'gender' => $_POST['gender'],
-                                'email' => $_POST['email'],
-                                'alamat' => $_POST['alamat'],
-                                'kelurahan_id' => $_POST['kelurahan_id']
+                                'telepon' => $_POST['telepon'],
+                                'alamat' => $_POST['alamat']
                             ];
                             $paramedik->update($id, $data);
                             echo "<script>

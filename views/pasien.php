@@ -147,8 +147,10 @@
                                         <input type="date" class="form-control" value="' . htmlspecialchars($item['tgl_lahir']) . '" id="tgl_lahir" name="tgl_lahir" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="gender" class="form-label">gender</label>
-                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['gender']) . '" id="gender" name="gender" required>
+                                        <input type="radio" class="form-check-control" id="gender" name="gender" value="L" '; htmlspecialchars($item['gender']) == 'L' ? 'checked' : ''; echo ' required>
+                                        <label for="laki-laki" class="form-label">Laki-laki</label>
+                                        <input type="radio" class="form-check-control" id="gender" name="gender" value="P" '; htmlspecialchars($item['gender']) == 'P' ? 'checked' : ''; echo ' required>
+                                        <label for="perempuan" class="form-label">Perempuan</label>
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">email</label>

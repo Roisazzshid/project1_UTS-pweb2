@@ -22,8 +22,15 @@ class Paramedik
         return $stmt;
     }
 
-    public function create($nama, $tmp_lahir, $tgl_lahir, $gender, $kategori, $telepon, $alamat, $unit_kerja_id) 
+    public function create($nama, $tmp_lahir, $tgl_lahir, $gender, $telepon, $alamat, $unit_kerja_id) 
     {
+        if($unit_kerja_id == 1){
+            $kategori = "Dokte Gigi";
+        } elseif($unit_kerja_id == 2){
+            $kategori = "Dokter Umum";
+        } elseif($unit_kerja_id == 3){
+            $kategori = "Dokter Kesehatan Ibu & Anak";
+        }
         $stmt = $this->pdo->prepare("INSERT INTO paramedik (nama, tmp_lahir, tgl_lahir, gender, kategori, telepon, alamat, unit_kerja_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         return $stmt->execute([$nama, $tmp_lahir, $tgl_lahir, $gender, $kategori, $telepon, $alamat, $unit_kerja_id]);
     }

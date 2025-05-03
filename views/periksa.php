@@ -9,12 +9,36 @@
                 <div class="modal-body">
                     <form method="post" action="">
                         <div class="mb-3">
-                            <label for="nama" class="form-label">Nama</label>
-                            <input type="text" class="form-control" id="nama" name="nama" required>
+                            <label for="pasien_id" class="form-label">Nama Pasien</label>
+                            <select class="form-select" name="pasien_id" id="pasien_id" required>
+                                    <option value="" hidden>--Pilih Pasien--</option>
+                                    <?php 
+                                    require_once 'Controllers/Pasien.php';
+                                    $pasiens = $pasien->index();
+                                    foreach ($pasiens as $pasien){
+                                        echo "<option value='{$pasien['id']}'";
+
+                                        if(isset($row) && $row['nama_pasien'] == $pasien['nama']) echo " selected";
+
+                                        echo ">{$pasien['nama']}</option>";
+                                    }?>
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label for="tmp_lahir" class="form-label">tmp_lahir</label>
-                            <input type="text" class="form-control" id="tmp_lahir" name="tmp_lahir" required>
+                            <label for="paramedik_id" class="form-label">Nama Paramedik</label>
+                            <select class="form-select" name="paramedik_id" id="paramedik_id" required>
+                                    <option value="" hidden>--Pilih Paramedik--</option>
+                                    <?php 
+                                    require_once 'Controllers/Paramedik.php';
+                                    $paramediks = $paramedik->index();
+                                    foreach ($paramediks as $paramedik){
+                                        echo "<option value='{$paramedik['id']}'";
+
+                                        if(isset($row) && $row['nama_paramedik'] == $paramedik['nama']) echo " selected";
+
+                                        echo ">{$paramedik['nama']}</option>";
+                                    }?>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="berat" class="form-label">Berat Badan</label>
@@ -25,14 +49,16 @@
                             <input type="number" class="form-control" id="tinggi" name="tinggi" required>
                         </div>
                         <div class="mb-3">
-                            <input type="radio" class="form-check-control" id="gender" name="gender" value="L" required>
-                            <label for="laki-laki" class="form-label">Laki-laki</label>
-                            <input type="radio" class="form-check-control" id="gender" name="gender" value="P" required>
-                            <label for="perempuan" class="form-label">Perempuan</label>
+                            <input class="form-control" type="number" name="sistolik" placeholder="Sistolik" value="<?= isset($item) ? explode('/', $item['tensi'])[0] : ''; ?>" required>
+                            <span class="text-slash">/</span>
+                            <input class="form-control" type="number" name="diastolik" placeholder="Diastolik" value="<?= isset($item) ? explode('/', $item['tensi'])[1] : ''; ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="tanggal" class="form-label">Tanggal</label>
                             <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" name="keterangan" id="keterangan" placeholder="Keterangan Pasien"></textarea>
                         </div>
                         <input type="hidden" name="type" value="add">
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -92,7 +118,8 @@
                             echo "<script>alert('Data berhasil dihapus.');</script>";
                             echo "<script>window.location.href = 'dashboard.php?url=periksa';</script>";
                         } elseif($_POST['type'] == 'add'){
-                            $periksa->create($_POST['tanggal'], $_POST['nama_pasien'], $_POST['nama_paramedik'], $_POST['keterangan']);
+                            $tensi = $_POST['sistolik'] . '/' . $_POST['diastolik'];
+                            $periksa->create($_POST['pasien_id'], $_POST['paramedik_id'], $_POST['berat'], $_POST['tinggi'], $tensi, $_POST['tanggal'], $_POST['keterangan']);
                             echo "<script>alert('Data berhasil ditambahkan.');</script>";
                             echo "<script>window.location.href = 'dashboard.php?url=periksa';</script>";
                         } elseif ($_POST['type'] == 'edit') {
@@ -107,45 +134,20 @@
                                     <input type="hidden" name="type" value="update">
                                     <input type="hidden" name="id" value="' . htmlspecialchars($item['id']) . '">
                                     <div class="mb-3">
-                                        <label for="kode" class="form-label">Kode</label>
-                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['kode']) . '" id="kode" name="kode" required>
+                                        <label for="tanggal" class="form-label">tanggal</label>
+                                        <input type="date" class="form-control" value="' . htmlspecialchars($item['tanggal']) . '" id="tanggal" name="tanggal" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="nama" class="form-label">Nama</label>
-                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['nama']) . '" id="nama" name="nama" required>
+                                        <label for="nama_pasien" class="form-label">Nama Pasien</label>
+                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['nama_pasien']) . '" id="nama_pasien" name="nama_pasien" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="tmp_lahir" class="form-label">tmp_lahir</label>
-                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['tmp_lahir']) . '" id="tmp_lahir" name="tmp_lahir" required>
+                                        <label for="nama_paramedik" class="form-label">nama_paramedik</label>
+                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['nama_paramedik']) . '" id="nama_paramedik" name="nama_paramedik" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="tgl_lahir" class="form-label">tgl_lahir</label>
-                                        <input type="date" class="form-control" value="' . htmlspecialchars($item['tgl_lahir']) . '" id="tgl_lahir" name="tgl_lahir" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="gender" class="form-label">gender</label>
-                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['gender']) . '" id="gender" name="gender" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">email</label>
-                                        <input type="email" class="form-control" value="' . htmlspecialchars($item['email']) . '" id="email" name="email" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="alamat" class="form-label">alamat</label>
-                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['alamat']) . '" id="alamat" name="alamat" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="kelurahan_id" class="form-label">kelurahan</label>
-                                            <select class="form-select" name="kelurahan_id" id="kelurahan_id">
-                                                <option value="" hidden>--Pilih Kelurahan--</option>';
-                                                $kelurahan = $kelurahan->index();
-                                                foreach ($kelurahan as $lurah) {
-                                                 echo "<option value='{$lurah['id']}' "; 
-                                                 echo $lurah['id']==htmlspecialchars($item['kelurahan_id']) ? 'selected':'' ;
-                                                 echo ">{$lurah['nama']}</option>";
-                                                    //echo "<option value='{$lurah['id']}'>{$lurah['nama']}</option>";
-                                                }
-                                            echo '</select>
+                                        <label for="keterangan" class="form-label">keterangan</label>
+                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['keterangan']) . '" id="keterangan" name="keterangan" required>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Update</button>
                                 </div>

@@ -12,7 +12,7 @@ class Unitkerja
 
     public function index()
     {
-        $stmt = $this->pdo->query("SELECT * FROM unitkerja");
+        $stmt = $this->pdo->query("SELECT * FROM unit_kerja");
         return $stmt;
     }
 

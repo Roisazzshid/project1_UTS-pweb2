@@ -29,10 +29,10 @@ class Periksa
         return $stmt;
     }
 
-    public function create($pasien_id, $paramedik_id, $berat, $tinggi, $sensi, $tanggal, $keterangan) 
+    public function create($pasien_id, $paramedik_id, $berat, $tinggi, $tensi, $tanggal, $keterangan) 
     {
-        $stmt = $this->pdo->prepare("INSERT INTO periksa (pasien_id, paramedik_id, berat, tinggi, sensi, tanggal, keterangan) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        return $stmt->execute([$pasien_id, $paramedik_id, $berat, $tinggi, $sensi, $tanggal, $keterangan]);
+        $stmt = $this->pdo->prepare("INSERT INTO periksa (pasien_id, paramedik_id, berat, tinggi, tensi, tanggal, keterangan) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        return $stmt->execute([$pasien_id, $paramedik_id, $berat, $tinggi, $tensi, $tanggal, $keterangan]);
     }
 
     public function update($id, $data)
