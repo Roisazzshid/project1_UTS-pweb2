@@ -141,14 +141,14 @@
                                         <label for="perempuan" class="form-label">Perempuan</label>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="unit_jenis" class="form-label">Unit Jenis</label>
-                                            <select class="form-select" name="unit_jenis" id="unit_jenis">
-                                                <option value="" hidden>--Pilih Unit Jenis--</option>';
-                                                $paramedik = $paramedik->index();
-                                                foreach ($paramedik as $medik) {
-                                                 echo "<option value='{$medik['id']}' "; 
-                                                 echo $medik['id']==htmlspecialchars($item['unit_kerja']) ? 'selected':'' ;
-                                                 echo ">{$medik['nama']}</option>";
+                                        <label for="unit_kerja_id" class="form-label">Unit Kerja</label>
+                                            <select class="form-select" name="unit_kerja_id" id="unit_kerja_id">
+                                                <option value="" hidden>--Pilih Unit kerja--</option>';
+                                                $unitkerja = $unitkerja->index();
+                                                foreach ($unitkerja as $kerja) {
+                                                 echo "<option value='{$kerja['id']}' "; 
+                                                 echo $kerja['id']==htmlspecialchars($item['kategori']) ? 'selected' : '' ;
+                                                 echo ">{$kerja['nama']}</option>";
                                                     //echo "<option value='{$lurah['id']}'>{$lurah['nama']}</option>";
                                                 }
                                             echo '</select>
@@ -175,7 +175,8 @@
                                 'tgl_lahir' => $_POST['tgl_lahir'],
                                 'gender' => $_POST['gender'],
                                 'telepon' => $_POST['telepon'],
-                                'alamat' => $_POST['alamat']
+                                'alamat' => $_POST['alamat'],
+                                'unit_kerja_id' => $_POST['unit_kerja_id']
                             ];
                             $paramedik->update($id, $data);
                             echo "<script>

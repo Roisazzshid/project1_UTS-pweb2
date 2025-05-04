@@ -134,11 +134,7 @@
                                     <input type="hidden" name="type" value="update">
                                     <input type="hidden" name="id" value="' . htmlspecialchars($item['id']) . '">
                                     <div class="mb-3">
-                                        <label for="tanggal" class="form-label">tanggal</label>
-                                        <input type="date" class="form-control" value="' . htmlspecialchars($item['tanggal']) . '" id="tanggal" name="tanggal" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="nama_pasien" class="form-label">Nama Pasien</label>
+                                        <label for="nama_pasien" class="form-label">nama pasien</label>
                                         <input type="text" class="form-control" value="' . htmlspecialchars($item['nama_pasien']) . '" id="nama_pasien" name="nama_pasien" required>
                                     </div>
                                     <div class="mb-3">
@@ -146,8 +142,24 @@
                                         <input type="text" class="form-control" value="' . htmlspecialchars($item['nama_paramedik']) . '" id="nama_paramedik" name="nama_paramedik" required>
                                     </div>
                                     <div class="mb-3">
+                                        <label for="berat" class="form-label">berat</label>
+                                        <input type="number" class="form-control" value="' . htmlspecialchars($item['berat']) . '" id="berat" name="berat" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="tinggi" class="form-label">tinggi</label>
+                                        <input type="number" class="form-control" value="' . htmlspecialchars($item['tinggi']) . '" id="tinggi" name="tinggi" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="tensi" class="form-label">tensi</label>
+                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['tensi']) . '" id="tensi" name="tensi" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="tanggal" class="form-label">tanggal</label>
+                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['tanggal']) . '" id="tanggal" name="tanggal" required>
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="keterangan" class="form-label">keterangan</label>
-                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['keterangan']) . '" id="keterangan" name="keterangan" required>
+                                        <textarea class="form-control" value="' . htmlspecialchars($item['keterangan']) . '" name="keterangan" id="keterangan"></textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Update</button>
                                 </div>
@@ -158,14 +170,13 @@
                         } elseif ($_POST['type'] == 'update') {
                             $id = $_POST['id'];
                             $data = [
-                                'kode' => $_POST['kode'],
-                                'nama' => $_POST['nama'],
-                                'tmp_lahir' => $_POST['tmp_lahir'],
-                                'tgl_lahir' => $_POST['tgl_lahir'],
-                                'gender' => $_POST['gender'],
-                                'email' => $_POST['email'],
-                                'alamat' => $_POST['alamat'],
-                                'kelurahan_id' => $_POST['kelurahan_id']
+                                'pasien_id' => $_POST['pasien_id'],
+                                'paramedik_id' => $_POST['paramedik_id'],
+                                'berat' => $_POST['berat'],
+                                'tinggi' => $_POST['tinggi'],
+                                'tensi' => $_POST['tensi'],
+                                'tanggal' => $_POST['tanggal'],
+                                'keterangan' => $_POST['keterangan']
                             ];
                             $periksa->update($id, $data);
                             echo "<script>
