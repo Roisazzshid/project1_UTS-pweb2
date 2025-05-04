@@ -64,6 +64,18 @@ class Periksa
             throw new Exception("Terjadi kesalahan saat menghapus data: " . $e->getMessage());
         }
     }
+
+    public function getPasien()
+    {
+        $stmt = $this->pdo->query("SELECT * FROM pasien");
+        return $stmt;
+    }
+
+    public function getParamedik()
+    {
+        $stmt = $this->pdo->query("SELECT * FROM paramedik");
+        return $stmt;
+    }
 }
 
 $periksa = new Periksa($pdo);

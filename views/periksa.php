@@ -134,12 +134,34 @@
                                     <input type="hidden" name="type" value="update">
                                     <input type="hidden" name="id" value="' . htmlspecialchars($item['id']) . '">
                                     <div class="mb-3">
-                                        <label for="nama_pasien" class="form-label">nama pasien</label>
-                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['nama_pasien']) . '" id="nama_pasien" name="nama_pasien" required>
+                                        <label for="pasien_id" class="form-label">Nama Pasien</label>
+                                            <select class="form-select" name="pasien_id" id="pasien_id">
+                                                <option value="" hidden>--Pilih Nama Pasien--</option>';
+                                                $namapasien = $periksa->getPasien();
+                                                foreach ($namapasien as $user) {
+                                                    echo "<option value='{$user['id']}'";
+
+                                                    if(isset($item) && htmlspecialchars($item['nama_pasien']) == $user['nama']) echo " selected";
+            
+                                                    echo ">{$user['nama']}</option>";
+                                                    //echo "<option value='{$lurah['id']}'>{$lurah['nama']}</option>";
+                                                }
+                                            echo '</select>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="nama_paramedik" class="form-label">nama_paramedik</label>
-                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['nama_paramedik']) . '" id="nama_paramedik" name="nama_paramedik" required>
+                                        <label for="paramedik_id" class="form-label">Nama Paramedik</label>
+                                            <select class="form-select" name="paramedik_id" id="paramedik_id">
+                                                <option value="" hidden>--Pilih Nama Paramedik--</option>';
+                                                $namaparamedik = $periksa->getParamedik();
+                                                foreach ($namaparamedik as $para) {
+                                                    echo "<option value='{$para['id']}'";
+
+                                                    if(isset($item) && htmlspecialchars($item['nama_paramedik']) == $para['nama']) echo " selected";
+            
+                                                    echo ">{$para['nama']}</option>";
+                                                    //echo "<option value='{$lurah['id']}'>{$lurah['nama']}</option>";
+                                                }
+                                            echo '</select>
                                     </div>
                                     <div class="mb-3">
                                         <label for="berat" class="form-label">berat</label>
@@ -151,7 +173,11 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="tensi" class="form-label">tensi</label>
-                                        <input type="text" class="form-control" value="' . htmlspecialchars($item['tensi']) . '" id="tensi" name="tensi" required>
+                                        <div class="d-flex gap-2">
+                                            <input class="form-control" type="number" name="sistolik" placeholder="Sistolik" value="'.explode('/', $item['tensi'])[0].'" required>
+                                            <span class="text-slash">/</span>
+                                            <input class="form-control" type="number" name="diastolik" placeholder="Diastolik" value="'.explode('/', $item['tensi'])[1].'" required>
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="tanggal" class="form-label">tanggal</label>
@@ -159,7 +185,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="keterangan" class="form-label">keterangan</label>
-                                        <textarea class="form-control" value="' . htmlspecialchars($item['keterangan']) . '" name="keterangan" id="keterangan"></textarea>
+                                        <textarea class="form-control" name="keterangan" id="keterangan">'. htmlspecialchars($item['keterangan']) .'</textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Update</button>
                                 </div>
@@ -168,13 +194,14 @@
                                 echo "Item not found.";
                             }
                         } elseif ($_POST['type'] == 'update') {
+                            $tensi = $_POST['sistolik'] . '/' . $_POST['diastolik'];
                             $id = $_POST['id'];
                             $data = [
                                 'pasien_id' => $_POST['pasien_id'],
                                 'paramedik_id' => $_POST['paramedik_id'],
                                 'berat' => $_POST['berat'],
                                 'tinggi' => $_POST['tinggi'],
-                                'tensi' => $_POST['tensi'],
+                                'tensi' => $tensi,
                                 'tanggal' => $_POST['tanggal'],
                                 'keterangan' => $_POST['keterangan']
                             ];

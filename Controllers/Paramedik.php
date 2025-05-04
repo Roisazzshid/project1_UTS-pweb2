@@ -25,7 +25,7 @@ class Paramedik
     public function create($nama, $tmp_lahir, $tgl_lahir, $gender, $telepon, $alamat, $unit_kerja_id) 
     {
         if($unit_kerja_id == 1){
-            $kategori = "Dokte Gigi";
+            $kategori = "Dokter Gigi";
         } elseif($unit_kerja_id == 2){
             $kategori = "Dokter Umum";
         } elseif($unit_kerja_id == 3){
@@ -59,7 +59,7 @@ class Paramedik
         $stmt = $this->pdo->prepare("UPDATE paramedik SET nama=?, tmp_lahir=?, tgl_lahir=?, gender=?, kategori=?, telepon=?, alamat=?, unit_kerja_id=? WHERE id=?");
         return $stmt->execute([$data['nama'], $data['tmp_lahir'], $data['tgl_lahir'], $data['gender'], $kategori, $data['telepon'], $data['alamat'], $data['unit_kerja_id'], $id]);
     }
-    
+
     public function delete($id)
     {
         // Validasi input
